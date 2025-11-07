@@ -1,0 +1,393 @@
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+  background-color: #202123;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #333;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Instead of hiding completely, leave 50px visible for the menu button */
+.sidebar:not(.open) {
+  transform: translateX(-210px); /* 260px - 50px = 210px */
+}
+
+.sidebar.open {
+  transform: translateX(0);
+  
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+}
+
+/* The menu button should always be visible */
+.menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* Optional: give the visible edge a gradient effect for style */
+.sidebar:not(.open)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  background: linear-gradient(to right, rgba(32, 33, 35, 0.95), rgba(32, 33, 35, 1));
+  pointer-events: none;
+}
+
+
+
+
+.sidebar-header h2 {
+  font-size: 18px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.new-chat {
+  width: 100%;
+  background-color: #343541;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.new-chat:hover {
+  background-color: #40414f;
+}
+
+.chat-history h3 {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.chat-history ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chat-history {
+  margin-top: 15px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-item {
+  background-color: #2a2b32;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* left-align text */
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  /* 👇 For ellipsis effect */
+  white-space: nowrap;         /* Keep text on one line */
+  overflow: hidden;            /* Hide overflowing text */
+  text-overflow: ellipsis;     /* Show ... when text overflows */
+  
+  max-width: 100%;             /* Prevent stretching */
+  box-sizing: border-box;      /* Include padding in width */
+}
+
+
+.chat-item:hover {
+  background-color: #3a3b43;
+}
+.chat-item.active {
+  background-color: #0e8f6e; /* blue highlight */
+  color: white;
+  font-weight: bold;
+}
+.chat-history li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.chat-history li:hover {
+  background-color: #343541;
+  color: #fff;
+}
+
+.sidebar-footer {
+  padding: 15px;
+  border-top: 1px solid #333;
+}
+
+.settings {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings:hover {
+  background-color: #343541;
+  color: #fff;
+}
+
+/* Scrollbar styling */
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background-color: #3a3a3a;
+  border-radius: 10px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+/* =========================================
+   📱 MOBILE-FIRST RESPONSIVE DESIGN
+   ========================================= */
+
+/* Base mobile styles (up to 480px) */
+@media (max-width: 480px) {
+
+  /* Sidebar */
+  .sidebar {
+    width: 70vw;
+    transform: translateX(-70vw);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 30px; /* small visible edge */
+  }
+
+  /* Chat Area */
+  .chat-area {
+    width: 100vw;
+    height: 100vh;
+    padding: 0.5rem;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .chat-messages {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .message {
+    max-width: 90%;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .search-input {
+    width: 90%;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  /* Empty chat center layout */
+  .empty-chat {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .center-search .search-input {
+    width: 90%;
+  }
+
+  /* Layout containers */
+  .chat-page,
+  .home-container {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-area-container,
+  .main-container {
+    margin-left: 0 !important;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Medium devices (tablets, up to 768px) */
+@media (max-width: 768px) {
+
+  /* Sidebar shrinks */
+  .sidebar {
+    width: 200px;
+    transform: translateX(-200px);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 40px;
+  }
+
+  /* Chat area + layout */
+  .chat-area {
+    padding: 1rem;
+  }
+
+  .chat-messages {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .message {
+    font-size: 14px;
+    max-width: 85%;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .search-input {
+    width: 80%;
+    height: 42px;
+  }
+
+  /* Layout containers */
+  .chat-area-container,
+  .main-container {
+    margin-left: 0;
+    transition: none;
+  }
+
+  /* Loading screen readability */
+  .loading {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large devices (up to 1024px) */
+@media (max-width: 1024px) {
+  .chat-area {
+    padding: 1.5rem;
+  }
+
+  .chat-messages {
+    width: 80%;
+  }
+
+  .message {
+    font-size: 15px;
+  }
+
+  .search-input {
+    width: 70%;
+  }
+}
+/* 📱 Sidebar auto-hidden below 600px */
+@media (max-width: 600px) {
+  .sidebar {
+    position: fixed;
+    left: -70vw;
+    top: 0;
+    width: 70vw;
+    height: 100vh;
+    transition: transform 0.3s ease, left 0.3s ease;
+    z-index: 999;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Menu (toggle) button visible when sidebar closed */
+  .menu-button {
+    display: block !important;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+    background: #10a37f;
+    color: white;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* 💻 On larger screens, menu button stays hidden */
+@media (min-width: 601px) {
+  .menu-button {
+    display: none !important;
+  }
+}

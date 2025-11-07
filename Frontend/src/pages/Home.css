@@ -1,0 +1,442 @@
+.home-container {
+  display: flex;
+  background-color: #1e1f23;
+  width:100vw;
+  height:100vh;
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* === MAIN CHAT AREA SHIFT EFFECT === */
+.chat-area-container {
+  flex: 1;
+  transition: margin-left 0.3s ease-in-out; /* smooth animation */
+  margin-left: 200px; /* default when sidebar is open */
+}
+
+/* When sidebar is closed (only 50px visible edge) */
+.chat-area-container.shifted {
+  margin-left: 160px; /* same as sidebar width */
+}
+
+.chat-area-container:not(.shifted) {
+  margin-left: 50px; /* show small menu button area */
+}
+
+/* Optional: ensure it doesn't shrink or overflow */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  transition: inherit; /* inherits smoothness */
+}
+
+
+/* =========================================
+   📱 MOBILE-FIRST RESPONSIVE DESIGN
+   ========================================= */
+
+/* Base mobile styles (up to 480px) */
+@media (max-width: 480px) {
+
+  /* Sidebar */
+  .sidebar {
+    width: 70vw;
+    transform: translateX(-70vw);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 30px; /* small visible edge */
+  }
+
+  /* Chat Area */
+  .chat-area {
+    width: 100vw;
+    height: 100vh;
+    padding: 0.5rem;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .chat-messages {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .message {
+    max-width: 90%;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .search-input {
+    width: 90%;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  /* Empty chat center layout */
+  .empty-chat {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .center-search .search-input {
+    width: 90%;
+  }
+
+  /* Layout containers */
+  .chat-page,
+  .home-container {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-area-container,
+  .main-container {
+    margin-left: 0 !important;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Medium devices (tablets, up to 768px) */
+@media (max-width: 768px) {
+
+  /* Sidebar shrinks */
+  .sidebar {
+    width: 200px;
+    transform: translateX(-200px);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 40px;
+  }
+
+  /* Chat area + layout */
+  .chat-area {
+    padding: 1rem;
+  }
+
+  .chat-messages {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .message {
+    font-size: 14px;
+    max-width: 85%;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .search-input {
+    width: 80%;
+    height: 42px;
+  }
+
+  /* Layout containers */
+  .chat-area-container,
+  .main-container {
+    margin-left: 0;
+    transition: none;
+  }
+
+  /* Loading screen readability */
+  .loading {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large devices (up to 1024px) */
+@media (max-width: 1024px) {
+  .chat-area {
+    padding: 1.5rem;
+  }
+
+  .chat-messages {
+    width: 80%;
+  }
+
+  .message {
+    font-size: 15px;
+  }
+
+  .search-input {
+    width: 70%;
+  }
+}
+/* =========================================
+   📱 MOBILE-FIRST RESPONSIVE DESIGN
+   ========================================= */
+
+/* Base mobile styles (up to 480px) */
+@media (max-width: 480px) {
+
+  /* Sidebar */
+  .sidebar {
+    width: 70vw;
+    transform: translateX(-70vw);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 30px; /* small visible edge */
+  }
+
+  /* Chat Area */
+  .chat-area {
+    width: 100vw;
+    height: 100vh;
+    padding: 0.5rem;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  .chat-messages {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .message {
+    max-width: 90%;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .search-input {
+    width: 90%;
+    height: 38px;
+    font-size: 0.9rem;
+  }
+
+  /* Empty chat center layout */
+  .empty-chat {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .center-search .search-input {
+    width: 90%;
+  }
+
+  /* Layout containers */
+  .chat-page,
+  .home-container {
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-area-container,
+  .main-container {
+    margin-left: 0 !important;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Medium devices (tablets, up to 768px) */
+@media (max-width: 768px) {
+
+  /* Sidebar shrinks */
+  .sidebar {
+    width: 200px;
+    transform: translateX(-200px);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar:not(.open)::after {
+    width: 40px;
+  }
+
+  /* Chat area + layout */
+  .chat-area {
+    padding: 1rem;
+  }
+
+  .chat-messages {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .message {
+    font-size: 14px;
+    max-width: 85%;
+  }
+
+  /* Searchbar */
+  .search-bar {
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .search-input {
+    width: 80%;
+    height: 42px;
+  }
+
+  /* Layout containers */
+  .chat-area-container,
+  .main-container {
+    margin-left: 0;
+    transition: none;
+  }
+
+  /* Loading screen readability */
+  .loading {
+    font-size: 1.2rem;
+  }
+}
+
+/* Large devices (up to 1024px) */
+@media (max-width: 1024px) {
+  .chat-area {
+    padding: 1.5rem;
+  }
+
+  .chat-messages {
+    width: 80%;
+  }
+
+  .message {
+    font-size: 15px;
+  }
+
+  .search-input {
+    width: 70%;
+  }
+}
+/* 📱 Menu Button Styling */
+.menu-button {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001; /* Above sidebar */
+  background-color: #10a37f;
+  color: white;
+  border: none;
+  padding: 10px 12px;
+  font-size: 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.menu-button:hover {
+  background-color: #0e8d6d;
+}
+
+/* 💻 Hide on larger screens */
+@media (min-width: 771px) {
+  .menu-button {
+    display: none;
+  }
+}
+
+/* 📱 Sidebar behavior below 770px */
+@media (max-width: 770px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -70vw; /* hidden by default */
+    width: 70vw;
+    height: 100vh;
+    background-color: #202123;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0; /* slide in */
+  }
+}
+
+/* Hide menu button only on large screens */
+@media (min-width: 771px) {
+  .menu-button {
+    display: none;
+  }
+}
+
+/* Sidebar for small & medium devices (≤ 770px) */
+@media (max-width: 770px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -70vw; /* hidden by default */
+    width: 70vw;
+    height: 100vh;
+    background-color: #202123;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0; /* slide in */
+  }
+
+  /* Make sure chat area takes full width */
+  .chat-area-container {
+    margin-left: 0 !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
