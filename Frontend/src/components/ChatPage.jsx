@@ -87,7 +87,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
-import ChatArea from "../ChatArea";
+import ChatArea from "../components/ChatArea"
 
 const socket = io("https://chatgpt-iet7.onrender.com", { autoConnect: true });
 
