@@ -23,10 +23,7 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* ✅ MENU BUTTON OUTSIDE SIDEBAR */}
-      {/* <button className="menu-button" onClick={toggleSidebar}>
-        ☰
-      </button> */}
+      
 
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
