@@ -29,24 +29,40 @@ const ChatArea = () => {
   }, [chatId]);
 
   // ✅ Listen for AI responses
+  // useEffect(() => {
+  //   const handleAIResponse = (data) => {
+  //     // console.log("📨 Received AI response:", data);
+  //     if (messageProcessed) return;
+  //     setMessageProcessed(true);
+  //     setAiText(data.content);
+  //     setDisplayText("");
+  //     setIsTyping(true);
+  //     setIsLoading(false);
+  //   };
+
+  //   socket.off("ai-response");
+  //   socket.on("ai-response", handleAIResponse);
+
+  //   return () => {
+  //     socket.off("ai-response", handleAIResponse);
+  //   };
+  // }, [messageProcessed]);
   useEffect(() => {
-    const handleAIResponse = (data) => {
-      console.log("📨 Received AI response:", data);
-      if (messageProcessed) return;
-      setMessageProcessed(true);
-      setAiText(data.content);
-      setDisplayText("");
-      setIsTyping(true);
-      setIsLoading(false);
-    };
+  const handleAIResponse = (data) => {
+    setMessageProcessed(true);
+    setAiText(data.content);
+    setDisplayText("");
+    setIsTyping(true);
+    setIsLoading(false);
+  };
 
-    socket.off("ai-response");
-    socket.on("ai-response", handleAIResponse);
+  socket.on("ai-response", handleAIResponse);
 
-    return () => {
-      socket.off("ai-response", handleAIResponse);
-    };
-  }, [messageProcessed]);
+  return () => {
+    socket.off("ai-response", handleAIResponse);
+  };
+}, []);  // ✅ run ONLY once
+
 
   // ✅ Fetch messages whenever chatId changes
   useEffect(() => {
