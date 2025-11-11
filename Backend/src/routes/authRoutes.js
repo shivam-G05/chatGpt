@@ -75,8 +75,6 @@ router.post('/forgot-password', async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 });
-
-// POST /api/auth/reset-password/:token
 router.post('/reset-password/:token', async (req, res) => {
   try {
     const hashedToken = crypto
@@ -114,4 +112,3 @@ router.post('/reset-password/:token', async (req, res) => {
 module.exports = router;
 
 
-module.exports=router;
