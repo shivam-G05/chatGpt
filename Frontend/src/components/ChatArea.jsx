@@ -17,6 +17,28 @@ const ChatArea = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [messageProcessed, setMessageProcessed] = useState(false);
+  const [socketReady, setSocketReady] = useState(false);
+
+useEffect(() => {
+  const connectHandler = () => {
+    console.log("🔗 Socket connected:", socket.id);
+    setSocketReady(true);
+  };
+
+  const disconnectHandler = () => {
+    console.log("❌ Socket disconnected");
+    setSocketReady(false);
+  };
+
+  socket.on("connect", connectHandler);
+  socket.on("disconnect", disconnectHandler);
+
+  return () => {
+    socket.off("connect", connectHandler);
+    socket.off("disconnect", disconnectHandler);
+  };
+}, []);
+
 
   // ✅ Reset messages & state when chatId changes (mount/unmount)
   useEffect(() => {
@@ -111,6 +133,9 @@ const ChatArea = () => {
 
   // ✅ Handle user message
   const handleUserMessage = async (msg) => {
+    if(!socket.connected){
+      console.log("Socket not connected yet")
+    }
     if (isLoading || isTyping) return;
 
     setIsLoading(true);
@@ -185,7 +210,7 @@ const ChatArea = () => {
             <Searchbar
               onSearchStart={handleUserMessage}
               socket={socket}
-              isDisabled={isTyping || isLoading}
+              isDisabled={isTyping || isLoading || !socketReady}
               className="search-bar"
             />
           )}
