@@ -8,7 +8,7 @@ import ChatPage from '../src/components/ChatPage'
 import Settings from './pages/Settings'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
-import GuestRoute from './components/GuestRoute'
+import BlockedAuthRoute from './components/BlockedAuthRoute'
 
 const AppRoutes = () => {
     return (
@@ -16,8 +16,8 @@ const AppRoutes = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/register' element={<GuestRoute><Register /></GuestRoute>} />
-                <Route path='/login' element={<GuestRoute><Login /></GuestRoute>} />
+                <Route path='/register' element={<BlockedAuthRoute><Register /></BlockedAuthRoute>} />
+                <Route path='/login' element={<BlockedAuthRoute><Login /></BlockedAuthRoute>} />
                 <Route path="/chat/:chatId" element={<ChatPageWrapper />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
