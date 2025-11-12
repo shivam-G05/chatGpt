@@ -37,7 +37,10 @@ useEffect(() => {
     socket.off("connect", connectHandler);
     socket.off("disconnect", disconnectHandler);
   };
-}, []);
+}, [chatId]);
+useEffect(() => {
+  if (socket.connected) setSocketReady(true);
+}, [chatId]);
 
 
   // ✅ Reset messages & state when chatId changes (mount/unmount)
