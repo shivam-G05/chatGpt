@@ -20,31 +20,24 @@ const ChatArea = () => {
   const [socketReady, setSocketReady] = useState(false);
 
 useEffect(() => {
-  if (!socket.connected) {
-    socket.connect(); // Force connect if not connected
-  }
-
-  if (socket.connected) {
-    console.log("✅ Socket already connected:", socket.id);
+  const connectHandler = () => {
+    console.log("🔗 Socket connected:", socket.id);
     setSocketReady(true);
-  }
+  };
 
-  socket.on("connect", () => {
-    console.log("✅ Socket connected:", socket.id);
-    setSocketReady(true);
-  });
-
-  socket.on("disconnect", () => {
+  const disconnectHandler = () => {
     console.log("❌ Socket disconnected");
     setSocketReady(false);
-  });
+  };
+
+  socket.on("connect", connectHandler);
+  socket.on("disconnect", disconnectHandler);
 
   return () => {
-    socket.off("connect");
-    socket.off("disconnect");
+    socket.off("connect", connectHandler);
+    socket.off("disconnect", disconnectHandler);
   };
 }, []);
-
 
 
   // ✅ Reset messages & state when chatId changes (mount/unmount)
