@@ -126,21 +126,208 @@
 
 // export default Sidebar;
 
+// import React, { useEffect } from "react";
+// import { FaPlus, FaCog, FaBars } from "react-icons/fa";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { useChat } from "../context/chatContextValue";
+// import "./Sidebar.css";
+
+// const Sidebar = ({ isOpen, toggleSidebar }) => {
+//   const { chats, fetchChats, createChat } = useChat();
+//   const navigate = useNavigate();
+//   const { chatId } = useParams();
+
+//   // ✅ Fetch chats only once on mount
+//   useEffect(() => {
+//     fetchChats();
+//   }, [fetchChats]);
+
+//   // ✅ CREATE NEW CHAT
+//   const handleNewChat = async () => {
+//     try {
+//       const newChatTitle = window.prompt("Enter a title for your new chat:");
+//       if (!newChatTitle || newChatTitle.trim() === "") return;
+
+//       const newChatId = await createChat(newChatTitle);
+      
+//       // ✅ Navigate to the new chat
+//       navigate(`/chat/${newChatId}`);
+//     } catch (error) {
+//       alert("Failed to create chat");
+//     }
+//   };
+
+//   // HANDLE CHAT CLICK
+//   const handleChatClick = (id) => {
+//     navigate(`/chat/${id}`);
+//   };
+
+//   return (
+//     <>
+//       {!isOpen && (
+//         <button className="menu-button" onClick={toggleSidebar}>
+//           ☰
+//         </button>
+//       )}
+
+//       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
+//         <div className="sidebar-header">
+//           <h2>ChatGPT Clone</h2>
+//           <button className="menu-btn" onClick={toggleSidebar}>
+//             <FaBars />
+//           </button>
+//         </div>
+
+//         <div className="sidebar-content">
+//           <button className="new-chat" onClick={handleNewChat}>
+//             <FaPlus /> New Chat
+//           </button>
+
+//           <div className="chat-history">
+//             {chats.length === 0 ? (
+//               <p className="no-chat">No chats yet</p>
+//             ) : (
+//               <ul className="chat-list">
+//                 {chats.map((chat) => (
+//                   <li
+//                     key={chat._id}
+//                     className={`chat-item ${chatId === chat._id ? "active" : ""}`}
+//                     onClick={() => handleChatClick(chat._id)}
+//                     title={chat.title}
+//                   >
+//                     {chat.title}
+//                   </li>
+//                 ))}
+//               </ul>
+//             )}
+//           </div>
+//         </div>
+
+//         <div className="sidebar-footer">
+//           <button className="settings" onClick={() => navigate("/settings")}>
+//             <FaCog /> Settings
+//           </button>
+//         </div>
+//       </aside>
+//     </>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
+// import React, { useEffect } from "react";
+// import { FaPlus, FaCog, FaBars } from "react-icons/fa";
+// import { useNavigate, useParams } from "react-router-dom";
+// import Cookies from "js-cookie";
+// import { useChat } from "../context/chatContextValue";
+// import "./Sidebar.css";
+
+// const Sidebar = ({ isOpen, toggleSidebar }) => {
+//   const { chats, fetchChats, createChat } = useChat();
+//   const navigate = useNavigate();
+//   const { chatId } = useParams();
+
+//   // ✅ Fetch chats only once on mount
+//   useEffect(() => {
+//     fetchChats();
+//   }, [fetchChats]);
+
+//   // ✅ CREATE NEW CHAT
+//   const handleNewChat = async () => {
+//     try {
+//       const newChatTitle = window.prompt("Enter a title for your new chat:");
+//       if (!newChatTitle || newChatTitle.trim() === "") return;
+
+//       const newChatId = await createChat(newChatTitle);
+      
+//       // ✅ Navigate to the new chat
+//       navigate(`/chat/${newChatId}`);
+//     } catch (error) {
+//       alert("Failed to create chat");
+//     }
+//   };
+
+//   // HANDLE CHAT CLICK
+//   const handleChatClick = (id) => {
+//     navigate(`/chat/${id}`);
+//   };
+
+//   return (
+//     <>
+//       {!isOpen && (
+//         <button className="menu-button" onClick={toggleSidebar}>
+//           ☰
+//         </button>
+//       )}
+
+//       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
+//         <div className="sidebar-header">
+//           <h2>ChatGPT Clone</h2>
+//           <button className="menu-btn" onClick={toggleSidebar}>
+//             <FaBars />
+//           </button>
+//         </div>
+
+//         <div className="sidebar-content">
+//           <button className="new-chat" onClick={handleNewChat}>
+//             <FaPlus /> New Chat
+//           </button>
+
+//           <div className="chat-history">
+//             {chats.length === 0 ? (
+//               <p className="no-chat">No chats yet</p>
+//             ) : (
+//               <ul className="chat-list">
+//                 {chats.map((chat) => (
+//                   <li
+//                     key={chat._id}
+//                     className={`chat-item ${chatId === chat._id ? "active" : ""}`}
+//                     onClick={() => handleChatClick(chat._id)}
+//                     title={chat.title}
+//                   >
+//                     {chat.title}
+//                   </li>
+//                 ))}
+//               </ul>
+//             )}
+//           </div>
+//         </div>
+
+//         <div className="sidebar-footer">
+//           <button className="settings" onClick={() => navigate("/settings")}>
+//             <FaCog /> Settings
+//           </button>
+//         </div>
+//       </aside>
+//     </>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
 import React, { useEffect } from "react";
 import { FaPlus, FaCog, FaBars } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useChat } from "../context/chatContextValue";
+import { useAuth } from "../context/authContextValue";
 import "./Sidebar.css";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const { chats, fetchChats, createChat } = useChat();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const { chatId } = useParams();
 
-  // ✅ Fetch chats only once on mount
+  // ✅ Fetch chats only when authenticated
   useEffect(() => {
-    fetchChats();
-  }, [fetchChats]);
+    if (isAuthenticated) {
+      fetchChats();
+    }
+  }, [isAuthenticated, fetchChats]);
 
   // ✅ CREATE NEW CHAT
   const handleNewChat = async () => {
