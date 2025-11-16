@@ -30,6 +30,12 @@ useEffect(() => {
     setSocketReady(false);
   };
 
+  // ✅ Check if socket is already connected on mount/chatId change
+  if (socket.connected) {
+    console.log("✅ Socket already connected:", socket.id);
+    setSocketReady(true);
+  }
+
   socket.on("connect", connectHandler);
   socket.on("disconnect", disconnectHandler);
 
@@ -38,25 +44,22 @@ useEffect(() => {
     socket.off("disconnect", disconnectHandler);
   };
 }, [chatId]);
+
+
+// ✅ Reset messages & state when chatId changes (mount/unmount)
 useEffect(() => {
-  if (socket.connected) setSocketReady(true);
-}, [chatId]);
-
-
-  // ✅ Reset messages & state when chatId changes (mount/unmount)
-  useEffect(() => {
     // setMessages([]);
     setAiText("");
     setDisplayText("");
     setIsTyping(false);
     setIsLoading(false);
     setMessageProcessed(false);
-  }, [chatId]);
-  //Used to navigate to the bottom of the chat
-  const bottomRef = useRef(null);
+}, [chatId]);
+//Used to navigate to the bottom of the chat
+const bottomRef = useRef(null);
 
   
-  useEffect(() => {
+useEffect(() => {
   const handleAIResponse = (data) => {
     setMessageProcessed(true);
     setAiText(data.content);
@@ -72,7 +75,7 @@ useEffect(() => {
   return () => {
     socket.off("ai-response", handleAIResponse);
   };
-}, []);
+},[]);
   
 
   //navigate to the bottom of the chat
