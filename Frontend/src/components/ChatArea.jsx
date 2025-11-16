@@ -232,7 +232,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { useChat } from "../context/ChatContext";
+import { useChat } from "../context/chatContextValue";
 import Searchbar from "./Searchbar";
 import "./ChatArea.css";
 

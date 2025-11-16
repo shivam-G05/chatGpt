@@ -129,7 +129,7 @@
 import React, { useEffect } from "react";
 import { FaPlus, FaCog, FaBars } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import { useChat } from "../context/ChatContext";
+import { useChat } from "../context/chatContextValue";
 import "./Sidebar.css";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
