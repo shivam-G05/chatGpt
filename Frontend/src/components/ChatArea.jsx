@@ -4,11 +4,11 @@ import "./ChatArea.css";
 import Searchbar from "./Searchbar";
 import axios from "axios";
 import socket from "../socket";
+import MessageActions from "./MessageActions";
 
 const ChatArea = () => {
   const { chatId } = useParams();
   const navigate = useNavigate();
-
   const [isActive, setIsActive] = useState(false);
   const [welcomeText, setWelcomeText] = useState("");
   const [aiText, setAiText] = useState("");
@@ -47,19 +47,19 @@ useEffect(() => {
 
 
   // ✅ Reset messages & state when chatId changes (mount/unmount)
-  useEffect(() => {
+useEffect(() => {
     // setMessages([]);
     setAiText("");
     setDisplayText("");
     setIsTyping(false);
     setIsLoading(false);
     setMessageProcessed(false);
-  }, [chatId]);
-  //Used to navigate to the bottom of the chat
-  const bottomRef = useRef(null);
+}, [chatId]);
+//Used to navigate to the bottom of the chat
+const bottomRef = useRef(null);
 
   
-  useEffect(() => {
+useEffect(() => {
   const handleAIResponse = (data) => {
     setMessageProcessed(true);
     setAiText(data.content);
@@ -78,14 +78,14 @@ useEffect(() => {
 }, []);
   
 
-  //navigate to the bottom of the chat
+//navigate to the bottom of the chat
 
-  useEffect(() => {
+useEffect(() => {
   bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping, isLoading]);
+}, [messages, isTyping, isLoading]);
 
-  // ✅ Fetch messages whenever chatId changes
-  useEffect(() => {
+ // ✅ Fetch messages whenever chatId changes
+useEffect(() => {
     const fetchMessages = async () => {
       try {
         if (!chatId) return;
@@ -103,10 +103,10 @@ useEffect(() => {
     };
 
     fetchMessages();
-  }, [chatId, navigate]);
+}, [chatId, navigate]);
 
-  // ✅ AI typing animation
-  useEffect(() => {
+// ✅ AI typing animation
+useEffect(() => {
     if (isTyping && aiText) {
       let i = -1;
       const speed = 40;
@@ -123,10 +123,10 @@ useEffect(() => {
       }, speed);
       return () => clearInterval(interval);
     }
-  }, [aiText, isTyping]);
+}, [aiText, isTyping]);
 
-  // ✅ Welcome text animation
-  useEffect(() => {
+// ✅ Welcome text animation
+useEffect(() => {
     const text = "Start a new conversation or continue where you left off.";
     let i = 0;
     const interval = setInterval(() => {
@@ -135,10 +135,10 @@ useEffect(() => {
       if (i === text.length) clearInterval(interval);
     }, 50);
     return () => clearInterval(interval);
-  }, []);
+}, []);
 
-  // ✅ Handle user message
-  const handleUserMessage = async (msg) => {
+// ✅ Handle user message
+const handleUserMessage = async (msg) => {
     if(!socket.connected){
       console.log("Socket not connected yet")
     }
@@ -150,7 +150,7 @@ useEffect(() => {
 
     // ✅ Emit socket message (no axios)
     socket.emit("ai-message", { chat: chatId, message: msg });
-  };
+};
 
   return (
     <main className={`chat-area ${isActive ? "active" : ""}`}>
@@ -184,14 +184,30 @@ useEffect(() => {
         // 🟩 Normal chat mode
         <>
           <div className="chat-messages">
-            {messages.map((msg, index) => (
+            {/* {messages.map((msg, index) => (
               <div
                 key={index}
                 className={`message ${msg.role === "user" ? "user" : "ai"}`}
               >
                 <p>{msg.text || msg.content}</p>
               </div>
+            ))} */}
+
+            {messages.map((msg, index) => (
+            <div key={index} className={`message ${msg.role === "user" ? "user" : "ai"}`}>
+              <p>{msg.text || msg.content}</p>
+              <MessageActions text={msg.text || msg.content} />
+            </div>
             ))}
+
+            {/* {isTyping && (
+              <div className="message ai">
+                <p>
+                  {displayText}
+                  <span className="cursor">|</span>
+                </p>
+              </div>
+            )} */}
 
             {isTyping && (
               <div className="message ai">
@@ -199,8 +215,10 @@ useEffect(() => {
                   {displayText}
                   <span className="cursor">|</span>
                 </p>
+                <MessageActions text={displayText} />
               </div>
             )}
+
 
             {isLoading && (
               <div className="loading-text">
