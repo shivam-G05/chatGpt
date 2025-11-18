@@ -31,7 +31,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   // ✅ Fetch chats when component mounts
   useEffect(() => {
     fetchChats();
-  }, []);
+  });
 
   // ✅ CREATE NEW CHAT
   const handleNewChat = async () => {
