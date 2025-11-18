@@ -138,7 +138,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
   const { chatId } = useParams();
 
-  // ✅ Function to fetch chats (reusable)
+  // ✅ Function to fetch chats 
   const fetchChats = async () => {
     try {
       const token = Cookies.get("token");
@@ -211,7 +211,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { withCredentials: true }
       );
 
-      if (response.status === 200) {
+      if (response.status === 204) {
         await fetchChats();
 
         // If deleted chat is currently active, navigate away

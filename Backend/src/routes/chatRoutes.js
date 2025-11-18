@@ -4,7 +4,8 @@ const chatMiddleware=require('../middleware/auth');
 const chatController=require('../controller/chatController');
 const jwt=require('jsonwebtoken');
 const messageModel=require('../models/message');
-// POST API-api/chat
+const chatModel=require('../models/chat');
+
 
 
 const verifyToken = (req, res, next) => {
@@ -19,8 +20,11 @@ const verifyToken = (req, res, next) => {
     return res.status(403).json({ message: "Invalid token" });
   }
 };
+
 router.post('/',chatMiddleware.authUser,chatController.createChat);
+
 router.get("/", verifyToken, chatController.getChat);
+
 router.get('/:chatId/messages', verifyToken, async (req, res) => {
   try {
     const messages = await messageModel.find({ chat: req.params.chatId }).sort({ createdAt: 1 });
@@ -52,6 +56,21 @@ router.post('/:chatId/messages', verifyToken, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Failed to create message" });
   }
+});
+
+router.delete('/:chatId',verifyToken,async(req,res)=>{
+  
+  try{
+    const {chatId}=req.params;
+    const deletedChat=await chatModel.findByIdAndDelete(chatId);
+    if(!deletedChat){
+      return res.status(404).json({chat:"Chat not found"});
+    }
+    res.status(204).json({message:"chat deleted successfully"});
+  }catch(error){
+    res.status(500).json({message:"Error deleting chat",error});
+  }
+
 });
 
   

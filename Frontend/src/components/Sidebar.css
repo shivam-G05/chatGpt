@@ -518,13 +518,13 @@
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .chat-item {
-    padding: 8px;
-    gap: 6px;
+    padding: 6px;
+    gap: 4px;
   }
 
   .delete-chat-btn {
     padding: 3px 6px;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   /* Always show delete button on mobile for easier access */
@@ -541,11 +541,11 @@
 
 @media (max-width: 480px) {
   .chat-item {
-    padding: 6px;
-    font-size: 13px;
+    padding: 4px;
+    font-size: 11px;
   }
 
   .delete-chat-btn {
-    font-size: 11px;
+    font-size: 8px;
   }
 }
