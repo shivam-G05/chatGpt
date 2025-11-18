@@ -27,6 +27,7 @@ router.get("/", verifyToken, chatController.getChat);
 
 router.get('/:chatId/messages', verifyToken, async (req, res) => {
   try {
+    
     const messages = await messageModel.find({ chat: req.params.chatId }).sort({ createdAt: 1 });
     res.json({ messages });
   } catch (err) {
